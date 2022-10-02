@@ -9,6 +9,13 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 * `mkdocs build` - Build the documentation site.
 * `mkdocs -h` - Print help message and exit.
 
+## Getting Started
+
+* Install Python & Poetry
+* Run `poetry env use 3.10` 
+* Run `poetry install`
+* Run `streamlit run python_workspace/demo.py`
+
 ## Project layout
 
     mkdocs.yml    # The configuration file.
