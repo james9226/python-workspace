@@ -10,8 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install poetry
-        run: pipx install poetry pytest
-
+        run: |
+          pipx install poetry 
+          pipx install pytest
       - name: Setup Python
         uses: actions/setup-python@v3
         with:
