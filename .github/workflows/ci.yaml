@@ -16,6 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd ..
+          ls
           poetry install
       - name: Test with pytest
         run: |
