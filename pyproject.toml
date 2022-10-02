@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "python_workspace"}]
 
 [tool.poetry.dependencies]
-python = "3.9.1"
+python = "^3.9"
 pandas = "^1.5.0"
 numpy = "^1.23.3"
 seaborn = "^0.12.0"
