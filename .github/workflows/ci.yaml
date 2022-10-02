@@ -21,6 +21,7 @@ jobs:
           python-version: "3.10"
       - name: Install dependencies
         run: |
+          poetry env use 3.10
           poetry install
       - name: Test with pytest
         run: |
