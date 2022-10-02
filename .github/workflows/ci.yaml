@@ -30,20 +30,3 @@ jobs:
 
 
 
-name: Python Workspace Testing
-on:
-  push:
-    - main
-  workflow_call:
-jobs:
-  deploydocs:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install mkdocs
-        run: pipx install mkdocs
-      - name: Build docs
-        run: mkdocs build --clean
-      - name: Deploy new docs
-        run: gh-deploy
