@@ -31,3 +31,9 @@ jobs:
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+### TODO - add cache
+      - name: Cache Poetry deps
+        uses: actions/setup-python@v3
+        with:  # Restore cache, skip Python installation
+          cache: poetry

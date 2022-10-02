@@ -13,10 +13,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install poetry
         run: python -m pip install poetry
-      - name: Cache Poetry deps
-        uses: actions/setup-python@v3
-        with:  # Restore cache, skip Python installation
-          cache: poetry
       - name: Install dependencies
         run: |
           poetry install
