@@ -22,12 +22,13 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
+          cache: poetry
       - name: Install dependencies
         run: |
           poetry install
       - name: Test with pytest
         run: |
-          pytest
+          poetry run pytest
 
 
 
