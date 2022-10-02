@@ -1,4 +1,4 @@
-name: Python Workspace Docs Deployment
+name: python-workspace docs deployment
 on:
   push:
     branches:

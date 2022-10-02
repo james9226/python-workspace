@@ -1,4 +1,4 @@
-name: Python Workspace Testing
+name: python-workspace testing
 on:
   pull_request:
     types: [opened, reopened, synchronize]
