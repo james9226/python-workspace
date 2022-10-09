@@ -1,11 +1,11 @@
-name: python-workspace docs deployment
+name: CD
 on:
   push:
     branches:
       - master
   workflow_call:
 jobs:
-  deploydocs:
+  deploy-documentation:
     runs-on: ubuntu-latest
 
     steps:
