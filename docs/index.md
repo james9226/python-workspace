@@ -1,13 +1,5 @@
-# Welcome to MkDocs
-
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
-
-## Commands
-
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+# Welcome to Python Worspace Project
+Currently this demos Streamlit and an ideal 
 
 ## Getting Started
 
@@ -18,10 +10,22 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
 ## Project layout
 
-    mkdocs.yml    # The configuration file.
+
+    mkdocs.yml    # Documentation configuration file.
+    pyproject.toml # Project configuration file, including dependancies
+    README.md     # Readme 
+    python_workspace/
+        demo.py   # Streamlit Demo Dashboard
+        ...       # Other App Source Code
     docs/
         index.md  # The documentation homepage.
         ...       # Other markdown pages, images and other files.
+    tests/
+        package_test.py # Unit Tests
+    site/
+        ...       # Code for documentation site (only on gh-pages branch)
+    .github/workflows/
+        ...       # Continuous Integration/Deployment Code
 
 ## Now there's something new here!
 Maybe there is something new
