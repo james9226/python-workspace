@@ -4,6 +4,12 @@ on:
     types: [opened, reopened, synchronize]
   workflow_call:
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: psf/black@stable
+    
   unit-testing:
     runs-on: ubuntu-latest
 
