@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: psf/black@stable
     
-  unit-testing:
+  testing:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,7 +32,7 @@ jobs:
 
       - name: Static Code Analysis
         run: |
-            mypy --strict $(git ls-files '*.py')
+          poetry run mypy --strict $(git ls-files '*.py')
 
       - name: Test with pytest
         run: |
