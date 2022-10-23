@@ -11,7 +11,21 @@ DATA_URL = (
 
 
 @st.cache
-def load_data(nrows):
+def load_data(nrows: int) -> pd.DataFrame:
+    """
+    Fetches a set number of rows of data from the streamlit raw uber data and returns it as a pandas DataFrame.
+
+    Parameters
+    ----------
+    nrows : int
+        First number to add.
+
+    Returns
+    -------
+    DataFrame
+        Containing the first ``nrows`` rows of data.
+    """
+
     data = pd.read_csv(DATA_URL, nrows=nrows)
     lowercase = lambda x: str(x).lower()
     data.rename(lowercase, axis="columns", inplace=True)

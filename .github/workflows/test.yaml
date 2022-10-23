@@ -30,6 +30,10 @@ jobs:
           poetry env use "3.10"
           poetry install --no-interaction
 
+      - name: Static Code Analysis
+        run: |
+            mypy --strict $(git ls-files '*.py')
+
       - name: Test with pytest
         run: |
           pytest
