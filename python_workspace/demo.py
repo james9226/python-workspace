@@ -3,15 +3,30 @@ import pandas as pd
 import numpy as np
 
 st.title("Uber pickups in NYC")
-DATE_COLUMN = "date/time"
-DATA_URL = (
+DATE_COLUMN: str = "date/time"
+DATA_URL: str = (
     "https://s3-us-west-2.amazonaws.com/"
     "streamlit-demo-data/uber-raw-data-sep14.csv.gz"
 )
 
 
 @st.cache
-def load_data(nrows):
+def load_data(nrows: int) -> pd.DataFrame:
+    """
+    Fetches a set number of rows of data from the streamlit raw uber data and returns it as a pandas DataFrame.
+    Production deployment caches the data using the streamlit decorator.
+
+    Parameters
+    ----------
+    nrows : int
+        First number to add.
+
+    Returns
+    -------
+    DataFrame
+        Containing the first ``nrows`` rows of data.
+    """
+
     data = pd.read_csv(DATA_URL, nrows=nrows)
     lowercase = lambda x: str(x).lower()
     data.rename(lowercase, axis="columns", inplace=True)
