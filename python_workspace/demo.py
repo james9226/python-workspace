@@ -19,11 +19,11 @@ def load_data(nrows: int) -> pd.DataFrame:
     Parameters
     ----------
     nrows : int
-        First number to add.
+        Number of rows of data to fetch
 
     Returns
     -------
-    DataFrame
+    pd.DataFrame
         Containing the first ``nrows`` rows of data.
     """
 
