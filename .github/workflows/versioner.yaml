@@ -18,6 +18,8 @@ jobs:
     steps:
 
     - uses: actions/checkout@v3
+    with:
+      ref: ${{ github.event.pull_request.head.ref }}
 
     - name: Install poetry
       run: |
@@ -44,4 +46,4 @@ jobs:
         echo ${{github.ref_name}}
         echo ${{github.head_ref}}
 
-        git push origin ${{github.head_ref}}
+        git push
