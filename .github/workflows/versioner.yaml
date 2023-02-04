@@ -41,5 +41,6 @@ jobs:
         # poetry version ${{ github.event.inputs.version }} #the action is not update the code
         poetry version major
         git add .
-        git commit -m "bump up ${{ github.event.inputs.version }} version from workflow"
+        git commit -m "bump version"
+        # git commit -m "bump up ${{ github.event.inputs.version }} version from workflow"
         git push
