@@ -9,6 +9,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: psf/black@stable
+  build-documentation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install mkdocs
+        run: pipx install mkdocs
+      - name: Build docs
+        run: mkdocs build --clean
     
   testing:
     runs-on: ubuntu-latest
@@ -33,6 +42,35 @@ jobs:
       - name: Test with pytest
         run: |
           pytest
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: checkout repo
+      uses: actions/checkout@v2.4.0
+
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+        architecture: 'x64'
+        
+    - name: setup poetry
+      run: |
+        python -m pip install -U pip
+        pip install poetry 
+  
+    - name: Setup Git
+      run: |
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "${GITHUB_ACTOR}@teamname.com"
+
+    - name: bump version
+      run: |
+        poetry version ${{ github.event.inputs.version }} #the action is not update the code
+        git commit -m "bump up ${{ github.event.inputs.version }} version from workflow"
+        git push
+
   # vulnerabilty-scan:
   #   runs-on: ubuntu-latest
   #   steps:
