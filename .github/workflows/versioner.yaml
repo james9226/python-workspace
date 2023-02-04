@@ -44,4 +44,4 @@ jobs:
         echo ${{github.ref_name}}
         echo ${{github.head_ref}}
 
-        git push origin ${{ github.ref_name }}
+        git push origin ${{github.head_ref}}
