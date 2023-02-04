@@ -14,7 +14,7 @@ jobs:
     - name: check_file
       id: check_file_changed
       run : |
-        $diff = git diff --name-only HEAD^ HEAD
+        $diff = git diff --name-only  origin/master...
         # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
         $SourceDiff = $diff | Where-Object { $_ -match '^docs/' -or $_ -match '.md$' }
         $HasDiff = $SourceDiff.Length -gt 0
