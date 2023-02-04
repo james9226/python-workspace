@@ -3,3 +3,5 @@ class myClass:
 
 
 inst = myClass()
+
+print(inst.var)
