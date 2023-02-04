@@ -1,0 +1,24 @@
+name: CI
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths: ['python_workspace/**']
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+      id: check_file_changed
+      run : |
+        $diff = git diff --name-only HEAD^ HEAD
+        # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
+        $SourceDiff = $diff | Where-Object { $_ -match '^docs/' -or $_ -match '.md$' }
+        $HasDiff = $SourceDiff.Length -gt 0
+
+        # Set the output named "docs_changed"
+        Write-Host "::set-output name=docs_changed::$HasDiff"
+
+      if: steps.check_file_changed.outputs.docs_changed == 'True'
+      run: echo hello
