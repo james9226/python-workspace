@@ -3,15 +3,15 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
   workflow_call:
-    inputs:
-      version:     
-        description: 'Semver type of new version (major / minor / patch)'
-        required: true
-        type: choice
-        options: 
-        - patch
-        - minor
-        - major
+    # inputs:
+    #   version:     
+    #     description: 'Semver type of new version (major / minor / patch)'
+    #     required: true
+    #     type: choice
+    #     options: 
+    #     - patch
+    #     - minor
+    #     - major
 jobs:
   bump-version:
     runs-on: ubuntu-latest
