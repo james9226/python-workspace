@@ -43,4 +43,4 @@ jobs:
         git add .
         git commit -m "bump version"
         # git commit -m "bump up ${{ github.event.inputs.version }} version from workflow"
-        git push
+        git push origin ${{ github.ref_name }}
