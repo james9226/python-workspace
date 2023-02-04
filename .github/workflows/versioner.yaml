@@ -14,7 +14,8 @@ on:
         - minor
         - major
 
-jobs:   bump-version:
+jobs:   
+  bump-version:
     runs-on: ubuntu-latest
     steps:
 
