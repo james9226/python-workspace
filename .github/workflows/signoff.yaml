@@ -5,11 +5,13 @@ on:
     paths: ['python_workspace/**']
 
 jobs:
+
   comment:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
 
+    - name: check_file
       id: check_file_changed
       run : |
         $diff = git diff --name-only HEAD^ HEAD
