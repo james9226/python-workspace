@@ -42,6 +42,23 @@ jobs:
       - name: Test with pytest
         run: |
           pytest
+
+  name: Bump version
+
+name: versioner
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+  workflow_call:
+    inputs:
+      version:     
+        description: 'Semver type of new version (major / minor / patch)'
+        required: true
+        type: choice
+        options: 
+        - patch
+        - minor
+        - major
   bump-version:
     runs-on: ubuntu-latest
     steps:
