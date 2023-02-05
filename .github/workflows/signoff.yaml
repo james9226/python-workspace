@@ -16,7 +16,8 @@ jobs:
       run : |
 
         echo "::set-output name=changed_files::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
-        echo "${{steps.check_file_changed.outputs.all}}"
+        echo "::set-output name=changed_files_v2::$(git diff --name-only origin/master)"
+        echo "${{steps.check_file_changed.outputs.changed_files_v2}}"
         echo "::set-output name=doc_diff::$(${{steps.check_file_changed.outputs.all}} | Where-Object { $_ -match '^docs/' -or $_ -match '.md$' })"
         # diff=git diff --name-only  origin/master...
         # # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
