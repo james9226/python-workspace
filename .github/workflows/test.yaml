@@ -45,7 +45,7 @@ jobs:
   signoffs:
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: read
+      pull-requests: write
     steps:
     - uses: actions/checkout@v3
     - uses: dorny/paths-filter@v2
