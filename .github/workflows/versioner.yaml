@@ -1,49 +1,49 @@
-name: versioner
-on:
-  pull_request:
-    types: [opened, reopened, synchronize]
-  workflow_call:
-    # inputs:
-    #   version:     
-    #     description: 'Semver type of new version (major / minor / patch)'
-    #     required: true
-    #     type: choice
-    #     options: 
-    #     - patch
-    #     - minor
-    #     - major
-jobs:
-  bump-version:
-    runs-on: ubuntu-latest
-    steps:
+# name: versioner
+# on:
+#   pull_request:
+#     types: [opened, reopened, synchronize]
+#   workflow_call:
+#     # inputs:
+#     #   version:     
+#     #     description: 'Semver type of new version (major / minor / patch)'
+#     #     required: true
+#     #     type: choice
+#     #     options: 
+#     #     - patch
+#     #     - minor
+#     #     - major
+# jobs:
+#   bump-version:
+#     runs-on: ubuntu-latest
+#     steps:
 
-    - uses: actions/checkout@v3
-      with:
-        ref: ${{ github.event.pull_request.head.ref }}
+#     - uses: actions/checkout@v3
+#       with:
+#         ref: ${{ github.event.pull_request.head.ref }}
 
-    - name: Install poetry
-      run: |
-        pipx install poetry 
-        pipx install pytest
-    - name: Setup Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.10"
-        cache: "poetry"
+#     - name: Install poetry
+#       run: |
+#         pipx install poetry 
+#         pipx install pytest
+#     - name: Setup Python
+#       uses: actions/setup-python@v3
+#       with:
+#         python-version: "3.10"
+#         cache: "poetry"
   
-    - name: Setup Git
-      run: |
-        git config user.name "${GITHUB_ACTOR}"
-        git config user.email "${GITHUB_ACTOR}@teamname.com"
+#     - name: Setup Git
+#       run: |
+#         git config user.name "${GITHUB_ACTOR}"
+#         git config user.email "${GITHUB_ACTOR}@teamname.com"
 
-    - name: bump version
-      run: |
-        # poetry version ${{ github.event.inputs.version }} #the action is not update the code
-        poetry version major
-        # git add .
-        # git commit -m "bump version"
-        # # git commit -m "bump up ${{ github.event.inputs.version }} version from workflow"
-        # echo ${{github.ref_name}}
-        # echo ${{github.head_ref}}
+#     - name: bump version
+#       run: |
+#         # poetry version ${{ github.event.inputs.version }} #the action is not update the code
+#         poetry version major
+#         # git add .
+#         # git commit -m "bump version"
+#         # # git commit -m "bump up ${{ github.event.inputs.version }} version from workflow"
+#         # echo ${{github.ref_name}}
+#         # echo ${{github.head_ref}}
 
-        # git push
+#         # git push
