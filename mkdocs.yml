@@ -1,1 +1,65 @@
-site_name: python workspace
+site_name: Python Workspace Project
+repo_url: https://github.com/james9226/python-workspace
+repo_name: Python Workspace
+
+nav:
+    - Home: index.md
+    - Changelog: changelog.md
+
+theme:
+  name: material
+  palette: 
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+      # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+  features:
+    # - navigation.tabs
+    - navigation.instant
+    - navigation.expand
+    - header.autohide
+    - search.highlight
+    - toc.follow
+    - toc.integrate 
+    - navigation.top
+
+markdown_extensions:
+  - tables
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - md_in_html
+
+extra_css:
+  - stylesheet.css
+
+plugins:
+  - search
+  - glightbox:
+       touchNavigation: true
+       loop: false
+       effect: zoom
+       slide_effect: slide
+       width: 100%
+       height: auto
+       zoomable: true
+       draggable: true
+       skip_classes:
+         - custom-skip-class-name
+       auto_caption: false
+       caption_position: bottom

@@ -17,9 +17,14 @@ flake8 = "^5.0.4"
 protobuf = "3.19.5"
 black = "^22.10.0"
 Pillow = "^9.3.0"
+mkdocs-glightbox = "^0.3.1"
 
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.0.0"
+mkdocs-material = "^9.0.11"
+
+[tool.poetry.group.sagemaker.dependencies]
+boto3 = "^1.26.64"
 
 [build-system]
 requires = ["poetry-core"]
