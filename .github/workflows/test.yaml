@@ -64,18 +64,6 @@ jobs:
     - name: check-signoff
       if: steps.filter.outputs.signoff-added == 'false' &&	steps.filter.outputs.model-changed == 'true' 
       run: exit 1
-    - name: comment-on-model-change
-      uses: actions/github-script@v3
-      if: steps.filter.outputs.model-code-changed == 'true'
-      with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
-        script: |
-          github.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: 'Model source code has been modified - have you had review & approval from Model Risk?'
-          })
 
 
   # vulnerabilty-scan:
