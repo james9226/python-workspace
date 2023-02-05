@@ -67,8 +67,6 @@ jobs:
       with: 
         script: |
           core.setFailed('Model has been updated but there is no corresponding signoff')
-      run: exit 1
-
 
   # vulnerabilty-scan:
   #   runs-on: ubuntu-latest
