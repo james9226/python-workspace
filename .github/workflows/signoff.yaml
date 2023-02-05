@@ -15,7 +15,7 @@ jobs:
       id: check_file_changed
       run : |
 
-        echo "all=git diff --name-only  origin/master..." >> $GITHUB_OUTPUT
+        echo "all=$(git diff --name-only  origin/master...)" >> $GITHUB_OUTPUT
         echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
         diff=git diff --name-only  origin/master...
         # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
