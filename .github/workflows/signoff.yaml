@@ -4,9 +4,9 @@ on:
     types: [opened, reopened, synchronize]
     paths:
       - 'python_workspace/**'
-      - '!signoff/**'
+      - '!docs/signoff/**'
 jobs:
-  check-signoff:
+  check-signoffs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
