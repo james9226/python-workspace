@@ -26,7 +26,7 @@ jobs:
 
     - name: echo_output
       run : |
-        echo steps.check_file_changed.outputs.all
+        echo ${{steps.check_file_changed.outputs.all}}
 
       # if: steps.check_file_changed.outputs.docs_changed == 'True'
       # run: echo hello
