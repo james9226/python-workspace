@@ -15,6 +15,7 @@ jobs:
       id: check_file_changed
       run : |
 
+        echo $(git branch -r)
         echo "::set-output name=changed_files::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
         echo "::set-output name=changed_files_v2::$(git diff --name-only origin/master)"
         echo "${{steps.check_file_changed.outputs.changed_files_v2}}"
