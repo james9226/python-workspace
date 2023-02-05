@@ -5,4 +5,3 @@ class myClass:
 inst = myClass()
 
 print(inst.var)
-1 + 1

@@ -62,9 +62,11 @@ jobs:
           assumptions-updated:
             - 'python_workspace/inputs/**'
     - name: check-signoff
+      uses: actions/github-script@v3
       if: steps.filter.outputs.signoff-added == 'false' &&	steps.filter.outputs.model-changed == 'true' 
-      run: exit 1
-
+      with: 
+        script: |
+          core.setFailed('Model has been updated but there is no corresponding signoff')
 
   # vulnerabilty-scan:
   #   runs-on: ubuntu-latest
