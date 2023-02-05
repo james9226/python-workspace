@@ -43,7 +43,40 @@ jobs:
         run: |
           pytest
 
-
+    signoffs:
+      runs-on: ubuntu-latest
+      permissions:
+        pull-requests: write
+      steps:
+      - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          base: ${{ github.ref }}
+          filters: |
+            model-changed:
+              - 'python_workspace/**'
+            signoff-added:
+              - 'docs/signoffs/**'
+            model-source-code-changed:
+              - 'python_workspace/**.py'
+            assumptions-updated:
+              - 'python_workspace/inputs/**'
+      - name: check-signoff
+        if: steps.filter.outputs.signoff-added == 'false' &&	steps.filter.outputs.model-changed == 'true' 
+        run: exit 1
+      - name: comment-on-model-change
+        uses: actions/github-script@v3
+        if: steps.filter.outputs.model-code-changed == 'true'
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Model source code has been modified - have you had review & approval from Model Risk?'
+            })
 
 
   # vulnerabilty-scan:
