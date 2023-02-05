@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-workspace"
-version = "0.1.0"
+version = "1.0.0"
 description = ""
 authors = ["James Neale <42097394+james9226@users.noreply.github.com>"]
 readme = "README.md"
