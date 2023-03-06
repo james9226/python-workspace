@@ -4,7 +4,6 @@ version = "1.0.0"
 description = ""
 authors = ["James Neale <42097394+james9226@users.noreply.github.com>"]
 readme = "README.md"
-packages = [{include = "python_workspace"}]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.9.7 || >3.9.7,<3.11"
@@ -12,16 +11,17 @@ pandas = "^1.5.0"
 numpy = "^1.23.3"
 seaborn = "^0.12.0"
 streamlit = "^1.13.0"
-mkdocs = "^1.4.0"
-flake8 = "^5.0.4"
 protobuf = "3.19.5"
-black = "^22.10.0"
 Pillow = "^9.3.0"
-mkdocs-glightbox = "^0.3.1"
 
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.0.0"
 mkdocs-material = "^9.0.11"
+mkdocs-table-reader-plugin = "^2.0"
+mkdocs-glightbox = "^0.3.1"
+black = "^22.10.0"
+mkdocs = "^1.4.0"
+flake8 = "^5.0.4"
 
 [tool.poetry.group.sagemaker.dependencies]
 boto3 = "^1.26.64"
