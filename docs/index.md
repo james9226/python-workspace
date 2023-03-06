@@ -56,3 +56,6 @@ graph LR
 </figure>
 
 <figure markdown>
+
+
+{{ read_csv('test.csv') }}
