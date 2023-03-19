@@ -127,6 +127,7 @@ class Authenticate:
                 if not st.session_state["logout"]:
                     if self.token["exp_date"] > datetime.utcnow().timestamp():
                         if "name" and "username" in self.token:
+                            print(datetime.now(), "JWT Authentication Success")
                             st.session_state["name"] = self.token["name"]
                             st.session_state["username"] = self.token["username"]
                             st.session_state["authentication_status"] = True
@@ -150,9 +151,10 @@ class Authenticate:
         bool
             Validity of entered credentials.
         """
-        with st.spinner("Please wait"):
+        with st.spinner("Please wait..."):
             try:
                 if self._check_pw():
+                    print(datetime.now(), "Email/Password Authentication Success")
                     if inplace:
                         st.session_state["name"] = self.username
                         self.exp_date = self._set_exp_date()
@@ -170,6 +172,7 @@ class Authenticate:
                     else:
                         return True
                 else:
+                    print(datetime.now(), "Email/Password Authentication Failure")
                     if inplace:
                         st.session_state["authentication_status"] = False
                         st.session_state["login_failure"] = True
@@ -177,11 +180,12 @@ class Authenticate:
                         return False
             except Exception as e:
                 print(e)
-            if inplace:
-                st.session_state["authentication_status"] = False
-                # st.session_state["login_failure"] = True
-            else:
-                return False
+            # if inplace:
+            #     print(datetime.now(), "Setting Auth State to False")
+            #     st.session_state["authentication_status"] = False
+            #     # st.session_state["login_failure"] = True
+            # else:
+            #     return False
 
     def login(self, form_name: str, location: str = "main") -> tuple:
         """
@@ -206,6 +210,12 @@ class Authenticate:
         if location not in ["main", "sidebar"]:
             raise ValueError("Location must be one of 'main' or 'sidebar'")
         time.sleep(0.1)
+        print(
+            datetime.now(),
+            "Checking Authentication -- ",
+            st.session_state["authentication_status"],
+        )
+
         if not st.session_state["authentication_status"]:
             self._check_cookie()
             if not st.session_state["authentication_status"]:
