@@ -14,16 +14,21 @@ authenticator = Authenticate(
     "python-workspace-cookie", st.secrets["cookie_signing_key"], 30
 )
 
-name, authentication_status, username = authenticator.login("Login", "main")
+name, authentication_status, username, login_failure = authenticator.login(
+    "Login", "main"
+)
 
 if authentication_status:
+    st.session_state["login_failure"] = False
     with st.sidebar:
         st.title("Python Workspace Demo Dashboard")
     authenticator.logout("Logout", "sidebar")
     with st.sidebar:
         st.write(f"Welcome *{name}*")
     build_uber_dashboard()
-elif authentication_status is False:
+elif authentication_status is False and login_failure is True:
     st.error("Username/password is incorrect")
 elif authentication_status is None:
     st.warning("Please enter your username and password")
+else:
+    st.spinner()

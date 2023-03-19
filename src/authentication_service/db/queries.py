@@ -22,7 +22,7 @@ def query_user(email: str) -> User:
     return User(**doc.to_dict())
 
 
-@st.cache_data(ttl=60)
+@st.cache_data(ttl=60, show_spinner=False)
 def query_number_request_attempts() -> int:
     db = load_db()
     collection = (
