@@ -4,12 +4,6 @@ on:
     types: [opened, reopened, synchronize]
   workflow_call:
 jobs:
-  # lint:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: psf/black@stable
-
   build-documentation:
     runs-on: ubuntu-latest
     steps:
@@ -61,32 +55,6 @@ jobs:
       - name: Test with pytest
         run: |
           poetry run pytest
-
-  # signoffs:
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     pull-requests: write
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - uses: dorny/paths-filter@v2
-  #     id: filter
-  #     with:
-  #       base: ${{ github.ref }}
-  #       filters: |
-  #         model-changed:
-  #           - 'python_workspace/**'
-  #         signoff-added:
-  #           - 'docs/signoffs/**'
-  #         model-source-code-changed:
-  #           - 'python_workspace/**.py'
-  #         assumptions-updated:
-  #           - 'python_workspace/inputs/**'
-  #   - name: check-signoff
-  #     uses: actions/github-script@v3
-  #     if: steps.filter.outputs.signoff-added == 'false' &&	steps.filter.outputs.model-changed == 'true' 
-  #     with: 
-  #       script: |
-  #         core.setFailed('Model has been updated but there is no corresponding signoff')
 
   vulnerabilty-scan:
     runs-on: ubuntu-latest
