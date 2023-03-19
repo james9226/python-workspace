@@ -6,8 +6,8 @@ number = Union[float, int]
 
 def str_to_number(number: str) -> float:
     try:
-        number = float(number)
-        return number
+        float_number = float(number)
+        return float_number
     except:
         raise ValueError(f"Failed to implicitly convert {number} to a float or an int.")
 

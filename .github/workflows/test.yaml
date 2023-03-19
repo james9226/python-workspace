@@ -39,7 +39,6 @@ jobs:
       - name: Install poetry
         run: |
           pipx install poetry 
-          pipx install pytest
       - name: Setup Python
         uses: actions/setup-python@v3
         with:
@@ -49,11 +48,19 @@ jobs:
       - name: Install dependencies
         run: |
           poetry env use "3.10"
-          poetry install --no-interaction
+          poetry install --no-interaction --with dev
+
+      - name: Linting
+        run : |
+          poetry run black ./
+
+      - name: Type check
+        run : |
+          poetry run mypy ./
 
       - name: Test with pytest
         run: |
-          pytest
+          poetry run pytest
 
   # signoffs:
   #   runs-on: ubuntu-latest
