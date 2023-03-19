@@ -52,6 +52,7 @@ class Authenticate:
         if "name" not in st.session_state:
             st.session_state["name"] = None
         if "authentication_status" not in st.session_state:
+            # print("init")
             st.session_state["authentication_status"] = None
         if "username" not in st.session_state:
             st.session_state["username"] = None
@@ -128,7 +129,7 @@ class Authenticate:
             self.token = self._token_decode()
             if self.token is not False:
                 if not st.session_state["logout"]:
-                    if self.token["exp_date"] > datetime.utcnow().timestamp():
+                    if self.token["exp_date"] > str(datetime.utcnow().timestamp()):
                         if "name" and "username" in self.token:
                             st.session_state["name"] = self.token["name"]
                             st.session_state["username"] = self.token["username"]
@@ -171,7 +172,7 @@ class Authenticate:
                         st.session_state["authentication_status"] = True
                         # st.session_state["login_failure"] = False
                         st.session_state["logout"] = False
-                        time.sleep(0.5)
+                        # time.sleep(0.5)
                     else:
                         return True
                 else:
@@ -212,7 +213,9 @@ class Authenticate:
         """
         if location not in ["main", "sidebar"]:
             raise ValueError("Location must be one of 'main' or 'sidebar'")
-        time.sleep(0.1)
+        # time.sleep(0.1)
+
+        # print(datetime.now(), st.session_state)
 
         if not st.session_state["authentication_status"]:
             self._check_cookie()
