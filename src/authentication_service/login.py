@@ -6,7 +6,7 @@ from src.authentication_service.db.queries import (
 )
 
 
-def secure_hash(password: str) -> str:
+def secure_hash(password: str) -> bytes:
     encoded_password = bytes(password, "utf-8")
     hashed = bcrypt.hashpw(encoded_password, bcrypt.gensalt())
     return hashed

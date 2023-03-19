@@ -4,12 +4,6 @@ on:
     types: [opened, reopened, synchronize]
   workflow_call:
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: psf/black@stable
-
   build-documentation:
     runs-on: ubuntu-latest
     steps:
@@ -27,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           poetry env use "3.10"
-          poetry install --no-interaction
+          poetry install --with dev --no-interaction
 
       - name: Build docs
         run: poetry run mkdocs build --clean
@@ -39,7 +33,6 @@ jobs:
       - name: Install poetry
         run: |
           pipx install poetry 
-          pipx install pytest
       - name: Setup Python
         uses: actions/setup-python@v3
         with:
@@ -49,55 +42,37 @@ jobs:
       - name: Install dependencies
         run: |
           poetry env use "3.10"
-          poetry install --no-interaction
+          poetry install --with dev --no-interaction 
+
+      - name: Linting
+        run : |
+          poetry run black ./
+
+      - name: Type check
+        run : |
+          poetry run mypy ./
 
       - name: Test with pytest
         run: |
-          pytest
+          poetry run pytest
 
-  # signoffs:
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     pull-requests: write
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - uses: dorny/paths-filter@v2
-  #     id: filter
-  #     with:
-  #       base: ${{ github.ref }}
-  #       filters: |
-  #         model-changed:
-  #           - 'python_workspace/**'
-  #         signoff-added:
-  #           - 'docs/signoffs/**'
-  #         model-source-code-changed:
-  #           - 'python_workspace/**.py'
-  #         assumptions-updated:
-  #           - 'python_workspace/inputs/**'
-  #   - name: check-signoff
-  #     uses: actions/github-script@v3
-  #     if: steps.filter.outputs.signoff-added == 'false' &&	steps.filter.outputs.model-changed == 'true' 
-  #     with: 
-  #       script: |
-  #         core.setFailed('Model has been updated but there is no corresponding signoff')
-
-  # vulnerabilty-scan:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Run Snyk to check for vulnerabilities
-  #       id: scan
-  #       uses: snyk/actions/python@master
-  #       continue-on-error: true # To make sure that SARIF upload gets called
-  #       env:
-  #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-  #       with:
-  #         args: --sarif-file-output=snyk.sarif
-  #     - name: Upload result to GitHub Code Scanning
-  #       uses: github/codeql-action/upload-sarif@v2
-  #       with:
-  #         sarif_file: snyk.sarif
-  #     - name: Check on failures
-  #       if: steps.scan.outcome != 'success'
-  #       run: exit 1
+  vulnerabilty-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Snyk to check for vulnerabilities
+        id: scan
+        uses: snyk/actions/python@master
+        continue-on-error: true # To make sure that SARIF upload gets called
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --sarif-file-output=snyk.sarif
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
+      - name: Check on failures
+        if: steps.scan.outcome != 'success'
+        run: exit 1
 

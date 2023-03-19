@@ -1,4 +1,4 @@
-from google.cloud import firestore
+from google.cloud import firestore  # type : ignore
 import streamlit as st
 from src.authentication_service.db.firestore_config import load_credentials
 

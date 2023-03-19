@@ -1,3 +1,4 @@
+from typing import Any, Dict, Optional, Union
 import jwt
 import streamlit as st
 from datetime import datetime, timedelta
@@ -72,13 +73,13 @@ class Authenticate:
             {
                 "name": st.session_state["name"],
                 "username": st.session_state["username"],
-                "exp_date": self.exp_date,
+                "exp_date": self.exp_date,  # type: ignore
             },
             self.key,
             algorithm="HS256",
         )
 
-    def _token_decode(self) -> str:
+    def _token_decode(self) -> Union[Dict[str, Any], bool]:
         """
         Decodes the contents of the reauthentication cookie.
 
@@ -101,9 +102,11 @@ class Authenticate:
         str
             The JWT cookie's expiry timestamp in Unix epoch.
         """
-        return (
-            datetime.utcnow() + timedelta(seconds=self.cookie_expiry_seconds)
-        ).timestamp()
+        return str(
+            (
+                datetime.utcnow() + timedelta(seconds=self.cookie_expiry_seconds)
+            ).timestamp()
+        )
 
     def _check_pw(self) -> bool:
         """
@@ -116,7 +119,7 @@ class Authenticate:
         """
         return authenticate_login(self.username, self.password)
 
-    def _check_cookie(self):
+    def _check_cookie(self) -> None:
         """
         Checks the validity of the reauthentication cookie.
         """
@@ -135,8 +138,9 @@ class Authenticate:
                             update_request_attempts(
                                 self.token["username"], True, "JWT_COOKIE_VERIFIED"
                             )
+        return None
 
-    def _check_credentials(self, inplace: bool = True) -> bool:
+    def _check_credentials(self, inplace: bool = True) -> Optional[bool]:
         """
         Checks the validity of the entered credentials.
 
@@ -184,6 +188,7 @@ class Authenticate:
             #     # st.session_state["login_failure"] = True
             # else:
             #     return False
+        return None
 
     def login(self, form_name: str, location: str = "main") -> tuple:
         """
