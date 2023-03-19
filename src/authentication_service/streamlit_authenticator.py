@@ -56,8 +56,8 @@ class Authenticate:
             st.session_state["username"] = None
         if "logout" not in st.session_state:
             st.session_state["logout"] = None
-        if "login_failure" not in st.session_state:
-            st.session_state["login_failure"] = True
+        # if "login_failure" not in st.session_state:
+        #     st.session_state["login_failure"] = True
 
     def _token_encode(self) -> str:
         """
@@ -130,7 +130,7 @@ class Authenticate:
                             st.session_state["name"] = self.token["name"]
                             st.session_state["username"] = self.token["username"]
                             st.session_state["authentication_status"] = True
-                            st.session_state["login_failure"] = False
+                            # st.session_state["login_failure"] = False
                             st.session_state["logout"] = False
                             update_request_attempts(
                                 self.token["username"], True, "JWT_COOKIE_VERIFIED"
@@ -150,10 +150,11 @@ class Authenticate:
         bool
             Validity of entered credentials.
         """
-        with st.spinner("Please wait"):
+        with st.spinner("Please wait..."):
             try:
                 if self._check_pw():
                     if inplace:
+                        st.success("Login successful! Loading dashboard...")
                         st.session_state["name"] = self.username
                         self.exp_date = self._set_exp_date()
                         self.token = self._token_encode()
@@ -164,7 +165,7 @@ class Authenticate:
                             + timedelta(seconds=self.cookie_expiry_seconds),
                         )
                         st.session_state["authentication_status"] = True
-                        st.session_state["login_failure"] = False
+                        # st.session_state["login_failure"] = False
                         st.session_state["logout"] = False
                         time.sleep(0.5)
                     else:
@@ -172,16 +173,17 @@ class Authenticate:
                 else:
                     if inplace:
                         st.session_state["authentication_status"] = False
-                        st.session_state["login_failure"] = True
+                        # st.session_state["login_failure"] = True
                     else:
                         return False
             except Exception as e:
                 print(e)
-            if inplace:
-                st.session_state["authentication_status"] = False
-                # st.session_state["login_failure"] = True
-            else:
-                return False
+            # if inplace:
+            #     print(datetime.now(), "Setting Auth State to False")
+            #     st.session_state["authentication_status"] = False
+            #     # st.session_state["login_failure"] = True
+            # else:
+            #     return False
 
     def login(self, form_name: str, location: str = "main") -> tuple:
         """
@@ -206,12 +208,15 @@ class Authenticate:
         if location not in ["main", "sidebar"]:
             raise ValueError("Location must be one of 'main' or 'sidebar'")
         time.sleep(0.1)
+
         if not st.session_state["authentication_status"]:
             self._check_cookie()
             if not st.session_state["authentication_status"]:
                 if location == "main":
+                    st.title("Python Workspace Demo Dashboard")
                     login_form = st.form("Login")
                 elif location == "sidebar":
+                    st.sidebar.title("Python Workspace Demo Dashboard")
                     login_form = st.sidebar.form("Login")
 
                 login_form.subheader(form_name)
@@ -226,7 +231,7 @@ class Authenticate:
             st.session_state["name"],
             st.session_state["authentication_status"],
             st.session_state["username"],
-            st.session_state["login_failure"],
+            # st.session_state["login_failure"],
         )
 
     def logout(self, button_name: str, location: str = "main"):
@@ -249,7 +254,7 @@ class Authenticate:
                 st.session_state["name"] = None
                 st.session_state["username"] = None
                 st.session_state["authentication_status"] = None
-                st.session_state["login_failure"] = None
+                # st.session_state["login_failure"] = None
         elif location == "sidebar":
             if st.sidebar.button(button_name):
                 self.cookie_manager.delete(self.cookie_name)
@@ -257,7 +262,7 @@ class Authenticate:
                 st.session_state["name"] = None
                 st.session_state["username"] = None
                 st.session_state["authentication_status"] = None
-                st.session_state["login_failure"] = None
+                # st.session_state["login_failure"] = None
 
     # def _update_password(self, username: str, password: str):
     #     """
