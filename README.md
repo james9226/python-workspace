@@ -3,6 +3,7 @@
 
 https://james9226.github.io/python-workspace/
 
+https://james9226-python-workspace-demo-gimqoe.streamlit.app/
 
 ### TODO - add linter
 
