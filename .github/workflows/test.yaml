@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           poetry env use "3.10"
-          poetry install --no-interaction
+          poetry install --with dev --no-interaction
 
       - name: Build docs
         run: poetry run mkdocs build --clean
@@ -48,7 +48,7 @@ jobs:
       - name: Install dependencies
         run: |
           poetry env use "3.10"
-          poetry install --no-interaction --with dev
+          poetry install --with dev --no-interaction 
 
       - name: Linting
         run : |
