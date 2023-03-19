@@ -2,6 +2,7 @@ import jwt
 import streamlit as st
 from datetime import datetime, timedelta
 import extra_streamlit_components as stx
+from src.authentication_service.db.queries import update_request_attempts
 from src.authentication_service.login import authenticate_login
 import time
 
@@ -127,6 +128,10 @@ class Authenticate:
                             st.session_state["name"] = self.token["name"]
                             st.session_state["username"] = self.token["username"]
                             st.session_state["authentication_status"] = True
+                            st.session_state["logout"] = False
+                            update_request_attempts(
+                                self.token["username"], True, "JWT_COOKIE_VERIFIED"
+                            )
 
     def _check_credentials(self, inplace: bool = True) -> bool:
         """
@@ -157,7 +162,7 @@ class Authenticate:
                         )
                         st.session_state["authentication_status"] = True
                         st.session_state["logout"] = False
-                        time.sleep(0.2)
+                        time.sleep(0.5)
                     else:
                         return True
                 else:
