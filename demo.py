@@ -6,7 +6,7 @@ st.set_page_config(
     page_title="Uber Dashboard",
     page_icon="🚕",
     layout="centered",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="auto",
     menu_items={"About": "# This is a header. This is an *extremely* cool app!"},
 )
 
@@ -17,8 +17,11 @@ authenticator = Authenticate(
 name, authentication_status, username = authenticator.login("Login", "main")
 
 if authentication_status:
-    authenticator.logout("Logout", "main")
-    st.write(f"Welcome *{name}*")
+    with st.sidebar:
+        st.title("Python Workspace Demo Dashboard")
+    authenticator.logout("Logout", "sidebar")
+    with st.sidebar:
+        st.write(f"Welcome *{name}*")
     build_uber_dashboard()
 elif authentication_status is False:
     st.error("Username/password is incorrect")
