@@ -20,7 +20,6 @@ def check_password(password: str, hashed_password: str) -> bool:
 
 def authenticate_login(email: str, password: str) -> bool:
 
-    print(query_number_request_attempts())
     if query_number_request_attempts() > 1000:
         return False
 
