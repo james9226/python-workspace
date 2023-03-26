@@ -1,3 +1,4 @@
+from datetime import datetime
 import streamlit as st
 from src.authentication_service.streamlit_authenticator import Authenticate
 from src.pages.uber_dashboard import build_uber_dashboard
@@ -5,10 +6,6 @@ from src.pages.uber_dashboard import build_uber_dashboard
 # This is a hack to prevent state variables become descoped and temporarily deleted.
 # This whole streamlit_authenticator package needs a rewrite to properly handle this bug
 # as it does not currently handle the state in the correct way!
-keeper_list = ["authentication_status"]
-for key in keeper_list:
-    if key in st.session_state:
-        st.session_state[key] = st.session_state[key]
 
 st.set_page_config(
     page_title="Uber Dashboard",
@@ -28,6 +25,8 @@ authenticator = Authenticate(
 
 name, authentication_status, username = authenticator.login("Login", "main")
 
+print(datetime.now(), authentication_status)
+
 if authentication_status:
     with st.sidebar:
         st.title("Python Workspace Demo Dashboard")
@@ -38,8 +37,10 @@ if authentication_status:
 # elif authentication_status is False and login_failure is True:
 #     st.error("Username/password is incorrect")
 elif authentication_status is False:
+    authenticator.login_component("Login")
     st.error("Username/password is incorrect")
 elif authentication_status is None:
+    authenticator.login_component("Login")
     st.warning("Please enter your username and password")
 else:
     st.spinner()

@@ -51,7 +51,7 @@ def build_uber_dashboard():
     st.session_state.load_model = False
 
     with st.spinner("Please wait"):
-        result = expensive_model(option)
+        _ = expensive_model(option)
         st.session_state.load_model = True
 
     if st.session_state.load_model:

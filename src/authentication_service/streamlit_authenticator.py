@@ -5,15 +5,14 @@ from datetime import datetime, timedelta
 import extra_streamlit_components as stx
 from src.authentication_service.db.queries import update_request_attempts
 from src.authentication_service.login import authenticate_login
-import time
 
-from .exceptions import (
-    CredentialsError,
-    ForgotError,
-    RegisterError,
-    ResetError,
-    UpdateError,
-)
+# from .exceptions import (
+#     CredentialsError,
+#     ForgotError,
+#     RegisterError,
+#     ResetError,
+#     UpdateError,
+# )
 
 
 class Authenticate:
@@ -191,6 +190,22 @@ class Authenticate:
             #     return False
         return None
 
+    def login_component(self, form_name: str, location: str = "main"):
+        if location == "main":
+            st.title("Python Workspace Demo Dashboard")
+            login_form = st.form("Login")
+        elif location == "sidebar":
+            st.sidebar.title("Python Workspace Demo Dashboard")
+            login_form = st.sidebar.form("Login")
+
+        login_form.subheader(form_name)
+        self.username = login_form.text_input("Username").lower()
+        st.session_state["username"] = self.username
+        self.password = login_form.text_input("Password", type="password")
+
+        if login_form.form_submit_button("Login"):
+            self._check_credentials()
+
     def login(self, form_name: str, location: str = "main") -> tuple:
         """
         Creates a login widget.
@@ -219,21 +234,21 @@ class Authenticate:
 
         if not st.session_state["authentication_status"]:
             self._check_cookie()
-            if not st.session_state["authentication_status"]:
-                if location == "main":
-                    st.title("Python Workspace Demo Dashboard")
-                    login_form = st.form("Login")
-                elif location == "sidebar":
-                    st.sidebar.title("Python Workspace Demo Dashboard")
-                    login_form = st.sidebar.form("Login")
+            # if not st.session_state["authentication_status"]:
+            #     if location == "main":
+            #         st.title("Python Workspace Demo Dashboard")
+            #         login_form = st.form("Login")
+            #     elif location == "sidebar":
+            #         st.sidebar.title("Python Workspace Demo Dashboard")
+            #         login_form = st.sidebar.form("Login")
 
-                login_form.subheader(form_name)
-                self.username = login_form.text_input("Username").lower()
-                st.session_state["username"] = self.username
-                self.password = login_form.text_input("Password", type="password")
+            #     login_form.subheader(form_name)
+            #     self.username = login_form.text_input("Username").lower()
+            #     st.session_state["username"] = self.username
+            #     self.password = login_form.text_input("Password", type="password")
 
-                if login_form.form_submit_button("Login"):
-                    self._check_credentials()
+            #     if login_form.form_submit_button("Login"):
+            #         self._check_credentials()
 
         return (
             st.session_state["name"],
